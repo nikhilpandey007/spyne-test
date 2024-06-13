@@ -1,18 +1,11 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const userRoutes = require('./routes/userRoutes');
+const router = express.Router();
+const {
+    likeDiscussion,
+    unlikeDiscussion,
+} = require('../controllers/interactionController');
 
-const app = express();
+router.post('/like/:id', likeDiscussion);
+router.post('/unlike/:id', unlikeDiscussion);
 
-mongoose.connect('mongodb://localhost:27017/userService');
-
-app.use(bodyParser.json());
-app.use('/users', userRoutes);
-
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-    console.log(`User Service running on port ${PORT}`);
-});
-
-module.exports = app;
+module.exports = router;
